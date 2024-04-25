@@ -1,0 +1,77 @@
+[
+    {
+        "brand": "CeraVe",
+        "type": "Moisturizer",
+        "suitable_for": ["dry", "sensitive"]
+    },
+    {
+        "brand": "Round Lab",
+        "type": "Moisturizer",
+        "suitable_for": ["combination", "normal"]
+    },
+    {
+        "brand": "Beauty of Joseon",
+        "type": "Moisturizer",
+        "suitable_for": ["normal", "sensitive"]
+    },
+    {
+        "brand": "L'Oreal",
+        "type": "Serum",
+        "suitable_for": ["combination", "dry"]
+    },
+    {
+        "brand": "Dr.Ceuracle",
+        "type": "Serum",
+        "suitable_for": ["dry", "sensitive"]
+    },
+    {
+        "brand": "The Ordinary",
+        "type": "Serum",
+        "suitable_for": ["dry", "normal"]
+    },
+    {
+        "brand": "La Roche-Posay",
+        "type": "Toner",
+        "suitable_for": ["normal", "sensitive"]
+    },
+    {
+        "brand": "Drunk Elephant",
+        "type": "Toner",
+        "suitable_for": ["combination", "sensitive"]
+    },
+    {
+        "brand": "Estee Lauder",
+        "type": "Toner",
+        "suitable_for": ["dry", "normal"]
+    },
+    {
+        "brand": "Neutragena",
+        "type": "Cleanser",
+        "suitable_for": ["dry", "sensitive"]
+    },
+    {
+        "brand": "Cetaphil",
+        "type": "Cleanser",
+        "suitable_for": ["combination", "normal"]
+    },
+    {
+        "brand": "Clinique",
+        "type": "Cleanser",
+        "suitable_for": ["combination", "sensitive"]
+    },
+    {
+        "brand": "Avene",
+        "type": "Sunscreen",
+        "suitable_for": ["dry", "normal"]
+    },
+    {
+        "brand": "Lamer",
+        "type": "Sunscreen",
+        "suitable_for": ["combination", "dry"]
+    },
+    {
+        "brand": "SkinMedica",
+        "type": "Sunscreen",
+        "suitable_for": ["dry", "sensitive"]
+    }
+]
