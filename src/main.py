@@ -2,12 +2,11 @@ import configparser
 from tabulate import tabulate
 import data
 
-def get_user_preferences():
-    """
-    Prompts the user to input their skin type and preferred brand(s) and returns the input values.
+"""
+Prompts the user to input their skin type and preferred brand(s) and returns the input values.
 
-    :return: Tuple containing user's skin type and list of preferred brands
-    """
+:return: Tuple containing user's skin type and list of preferred brands
+"""
 
 def get_user_preferences():
     print("Enter your skin type (dry, oily, sensitive, combination):")
@@ -18,25 +17,23 @@ def get_user_preferences():
 
     return skin_type, brands
 
-def sort_products(products, attribute='brand'):
-    """
-    Sorts the list of products based on the specified attribute.
+"""
+Sorts the list of products based on the specified attribute.
 
-    :param products: List of products to be sorted
-    :param attribute: Attribute based on which the sorting will be done (default: 'brand')
-    :return: Sorted list of products
-    """
+:param products: List of products to be sorted
+:param attribute: Attribute based on which the sorting will be done (default: 'brand')
+:return: Sorted list of products
+"""
 
 def sort_products(products, attribute='brand'):
     return sorted(products, key=lambda x: getattr(x, attribute))
 
-def display_recommendations(products):
-    """
-    Displays the recommended products for the user.
+"""
+Displays the recommended products for the user.
 
-    :param products: List of products to be displayed
-    :return: None
-    """
+:param products: List of products to be displayed
+:return: None
+"""
 
 def display_recommendations(products):
     if products:
@@ -46,15 +43,15 @@ def display_recommendations(products):
     else:
         print("No products found that match your criteria.")
 
+
 def aggregate_product_data(products):
+    
     """
     Aggregates product data to count the occurrence of each brand.
 
     :param products: List of products to be aggregated
     :return: Dictionary with brand as key and count as value
     """
-
-def aggregate_product_data(products):
     brand_count = {}
     for product in products:
         if product.brand in brand_count:
