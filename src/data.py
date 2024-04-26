@@ -1,7 +1,23 @@
 import json
 
 class Product:
+    """
+    Represents a product with brand, product type, and suitability information.
+
+    Attributes:
+    _brand (str): Brand of the product
+    _product_type (str): Type of the product
+    _suitable_for (list): List of skin types the product is suitable for
+    """
+
     def __init__(self, brand, product_type, suitable_for):
+        """
+        Initializes a Product instance with the given brand, product type, and suitability information.
+
+        :param brand: Brand of the product
+        :param product_type: Type of the product
+        :param suitable_for: List of skin types the product is suitable for
+        """
         self._brand = brand
         self._product_type = product_type
         self._suitable_for = suitable_for
@@ -40,11 +56,19 @@ class Product:
         return f"{self._brand} {self._product_type} (suitable for {', '.join(self._suitable_for)})"
 
 def load_data(file_path='data/source.json'):
-    """Loads product data from a JSON file and returns a list of Product instances."""
+    """
+    Loads product data from a JSON file and returns a list of Product instances.
+
+    :param file_path: Path to the JSON file containing product data (default: 'data/source.json')
+    :return: List of Product instances created from the data in the JSON file
+    """
     try:
         with open(file_path, 'r') as f:
             data = json.load(f)
-            return [Product(brand=product['brand'], product_type=product['type'], suitable_for=product['suitable_for']) for product in data]
+            return [Product(brand=product['brand'],
+                            product_type=product['type'],
+                            suitable_for=product['suitable_for'])
+                    for product in data]
     except FileNotFoundError:
         print("Error: The file was not found.")
         return []
