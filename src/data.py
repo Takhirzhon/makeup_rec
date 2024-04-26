@@ -39,7 +39,18 @@ class Product:
     def __str__(self):
         return f"{self._brand} {self._product_type} (suitable for {', '.join(self._suitable_for)})"
 
-def load_data():
-    with open('./data/source.json') as f:
-        data = json.load(f)
-    return [Product(brand=product['brand'], product_type=product['type'], suitable_for=product['suitable_for']) for product in data]
+def load_data(file_path='data/source.json'):
+    """Loads product data from a JSON file and returns a list of Product instances."""
+    try:
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+            return [Product(brand=product['brand'], product_type=product['type'], suitable_for=product['suitable_for']) for product in data]
+    except FileNotFoundError:
+        print("Error: The file was not found.")
+        return []
+    except json.JSONDecodeError:
+        print("Error: The file is not a valid JSON.")
+        return []
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return []

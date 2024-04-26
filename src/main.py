@@ -1,5 +1,6 @@
-import data
+import configparser
 from tabulate import tabulate
+import data
 
 def get_user_preferences():
     print("Enter your skin type (dry, oily, sensitive, combination):")
@@ -9,7 +10,6 @@ def get_user_preferences():
     return skin_type, brands
 
 def sort_products(products, attribute='brand'):
-    """Sort products based on a specified attribute."""
     return sorted(products, key=lambda x: getattr(x, attribute))
 
 def display_recommendations(products):
@@ -21,7 +21,6 @@ def display_recommendations(products):
         print("No products found that match your criteria.")
 
 def aggregate_product_data(products):
-    """Aggregates products to count how many are available for each brand."""
     brand_count = {}
     for product in products:
         if product.brand in brand_count:
@@ -31,13 +30,23 @@ def aggregate_product_data(products):
     return brand_count
 
 def main():
-    products = data.load_data()
+    config = configparser.ConfigParser()
+    config.read('./docs/config.ini') 
+    try:
+        data_file = config['DEFAULT']['DataFilePath']
+    except KeyError:
+        print("Error: 'DataFilePath' not found in configuration file.")
+        return
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return
+
+    products = data.load_data(data_file)
     skin_type, brands = get_user_preferences()
     recommendations = [product for product in products if skin_type in product.suitable_for and any(brand.strip().lower() == product.brand.lower() for brand in brands)]
     sorted_recommendations = sort_products(recommendations)
     display_recommendations(sorted_recommendations)
 
-    # Display aggregated data
     brand_count = aggregate_product_data(products)
     print("\nProduct availability by brand:")
     brand_table = [[brand, count] for brand, count in brand_count.items()]
