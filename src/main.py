@@ -15,8 +15,8 @@ def sort_products(products, attribute='brand'):
 def display_recommendations(products):
     if products:
         print("Recommended products for you:")
-        table = [[product.brand, ', '.join(product.suitable_for)] for product in products]
-        print(tabulate(table, headers=['Brand', 'Suitable For'], tablefmt='grid'))
+        table = [[product.brand, ', '.join(product.suitable_for), product.product_type] for product in products]
+        print(tabulate(table, headers=['Brand', 'Suitable For', 'Type'], tablefmt='grid'))
     else:
         print("No products found that match your criteria.")
 
@@ -49,8 +49,13 @@ def main():
 
     brand_count = aggregate_product_data(products)
     print("\nProduct availability by brand:")
-    brand_table = [[brand, count] for brand, count in brand_count.items()]
-    print(tabulate(brand_table, headers=['Brand', 'Count'], tablefmt='grid'))
+    brand_table = []
+    for brand, count in brand_count.items():
+        products_for_brand = [product for product in products if product.brand == brand]
+        types_for_brand = ', '.join(set(product.product_type for product in products_for_brand))
+        brand_table.append([brand, types_for_brand, count])
+
+    print(tabulate(brand_table, headers=['Brand', 'Type', 'Count'], tablefmt='grid'))
 
 if __name__ == "__main__":
     main()
