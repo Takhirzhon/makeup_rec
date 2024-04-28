@@ -1,7 +1,8 @@
 import unittest
 from unittest.mock import patch, MagicMock
+import os
 import sys
-sys.path.append('../src')
+sys.path.append(os.path.abspath('../src'))
 from main import get_user_preferences, sort_products, aggregate_product_data
 
 class TestProductApp(unittest.TestCase):
