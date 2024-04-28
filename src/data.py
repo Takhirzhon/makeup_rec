@@ -55,12 +55,6 @@ class Product:
     def __str__(self):
         return f"{self._brand} {self._product_type} (suitable for {', '.join(self._suitable_for)})"
 
-    def __eq__(self, other):
-        if not isinstance(other, Product):
-            return NotImplemented
-        return (self.brand.lower() == other.brand.lower() and
-                any(skin.lower() in self.suitable_for for skin in other.suitable_for))
-        
 def load_data(file_path='data/source.json'):
     """
     Loads product data from a JSON file and returns a list of Product instances.

@@ -1,22 +1,20 @@
 import configparser
 from tabulate import tabulate
 import data
-from data import Product
 
 
-def get_user_preferences(products):
+def get_user_preferences():
+    """
+    Prompts the user to input their skin type and preferred brand(s) and returns the input values.
+    :return: Tuple containing user's skin type and list of preferred brands
+    """
     print("Enter your skin type (dry, oily, sensitive, combination):")
     skin_type = input().strip().lower()
 
     print("Enter your preferred brand:")
     brands = [brand.strip() for brand in input().split(',')]
 
-    user_product = Product(brands[0], 'Any', [skin_type])
-    matching_products = [product for product in products if product == user_product]
-
     return skin_type, brands
-
-
 
 
 
@@ -65,36 +63,56 @@ def aggregate_product_data(products):
     return brand_count
 
 def main():
+    """
+    The main function reads the configuration file, extracts the DataFilePath,
+    and handles any potential errors that may occur during the process.
+
+    :return: None
+    """
     config = configparser.ConfigParser()
     config.read('../docs/config.ini')
 
     try:
+        # Attempt to read the 'DataFilePath' from the configuration file
         data_file = config['DEFAULT']['DataFilePath']
     except KeyError:
+        # Handle KeyError if 'DataFilePath' is not found in the configuration file
         print("'DataFilePath' not found in config file.")
         return
     except Exception as e:
+        # Handle any other exceptions that may occur
         print(f"An error occurred: {e}")
         return
 
-    products = data.load_data(data_file)  # Load product data from a JSON file
 
-    skin_type, brands = get_user_preferences(products)  # Get user preferences and check against products
+    #Load data from data_file
+    products = data.load_data(data_file)
 
-    # Filter products based on user preferences
-    recommendations = [product for product in products if skin_type in product.suitable_for and any(
-        brand.strip().lower() == product.brand.lower() for brand in brands)]
+    #Get user preferences for skin type and preferred brands
+    skin_type, brands = get_user_preferences()
 
-    sorted_recommendations = sort_products(recommendations)  # Sort the filtered recommendations
+    #Filter products based on user preferences
+    recommendations = [product for product in products
+                       if skin_type in product.suitable_for and any(
+            brand.strip().lower() == product.brand.lower() for brand in brands)]
 
-    display_recommendations(sorted_recommendations)  # Display the sorted recommendations
+    #Sort the filtered recommendations
+    sorted_recommendations = sort_products(recommendations)
 
-    brand_count = aggregate_product_data(products)  # Aggregate product data
+    #Display the sorted recommendations
+    display_recommendations(sorted_recommendations)
+
+    # Aggregate product data and display product availability by brand
+    brand_count = aggregate_product_data(products)
     print("\nProduct availability by brand:")
-    brand_table = [[brand, ', '.join(set(product.product_type for product in products if product.brand == brand)), count]
-                   for brand, count in brand_count.items()]
+    brand_table = []
+    for brand, count in brand_count.items():
+        products_for_brand = [product for product in products if product.brand == brand]
+        types_for_brand = ', '.join(set(product.product_type for product in products_for_brand))
+        brand_table.append([brand, types_for_brand, count])
 
     print(tabulate(brand_table, headers=['Brand', 'Type', 'Count'], tablefmt='grid'))
+
 
 if __name__ == "__main__":
     main()
